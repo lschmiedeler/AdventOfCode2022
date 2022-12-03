@@ -1,3 +1,5 @@
+library(stringr)
+
 rucksacks <- read.csv("Day3Input.txt", header = F)
 names(rucksacks) <- c("rucksack")
 rucksacks <- as.list(rucksacks$rucksack)
@@ -8,24 +10,16 @@ find_common_char <- function(x) {
   for (i in 1:(length(x)-1)) {
     str_2 <- x[i+1]
     new_common_char <- sort(str_extract(str_1, str_split(str_2, pattern = "")[[1]]))
-    if (length(common_char > 0)) {
-      common_char <- intersect(common_char, new_common_char)
-    }
-    else {
-      common_char <- new_common_char
-    }
+    if (i > 1) { common_char <- unique(intersect(common_char, new_common_char)) }
+    else { common_char <- unique(new_common_char) }
   }
   return(common_char)
 }
 
 find_priority <- function(c) {
   ascii_dec <- as.numeric(charToRaw(c))
-  if (ascii_dec <= 90) {
-    return(ascii_dec - 38)
-  }
-  else {
-    return(ascii_dec - 96)
-  }
+  if (ascii_dec <= 90) { return(ascii_dec - 38) }
+  else { return(ascii_dec - 96) }
 }
 
 priorities_1 <- sapply(lapply(rucksacks, function(x) {
