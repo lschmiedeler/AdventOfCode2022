@@ -1,8 +1,6 @@
 library(stringr)
 
-rucksacks <- read.csv("Day3Input.txt", header = F)
-names(rucksacks) <- c("rucksack")
-rucksacks <- as.list(rucksacks$rucksack)
+rucksacks <- as.list(read.csv("Day3Input.txt", header = F, sep = "\n")[,1])
 
 find_common_char <- function(x) {
   common_char <- c()
