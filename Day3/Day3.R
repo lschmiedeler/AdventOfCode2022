@@ -20,11 +20,11 @@ find_priority <- function(c) {
   else { return(ascii_dec - 96) }
 }
 
-priorities_1 <- sapply(lapply(rucksacks, function(x) {
+priorities_1 <- sapply(rucksacks, function(x) {
   c_1 <- substring(x, 1, nchar(x)/2)
   c_2 <- substring(x, 1 + nchar(x)/2, nchar(x))
   find_priority(find_common_char(c(c_1, c_2)))
-}), function(x) { x })
+})
 
 priorities_2 <- c()
 for (i in seq(from = 1, to = length(rucksacks), by = 3)) {
