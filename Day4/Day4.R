@@ -1,4 +1,4 @@
-pairs <- as.list(read.csv("Day4Input.txt", header = F, sep = "\n")$V1)
+pairs <- as.list(read.csv("Day4Input.txt", header = F, sep = "\n")[,1])
 
 split_sections <- function(pair) {
   sections <- strsplit(pair, split = ",")[[1]]

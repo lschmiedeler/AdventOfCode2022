@@ -5,7 +5,7 @@ grid <- unname(sapply(readLines(connection), function(x) { as.numeric(str_split(
 close(connection)
 
 grid_vector <- sapply(grid, function(x) { x })
-n <- nrow(grid) # square grid
+n <- nrow(grid) # square grid (nrow = ncol)
 
 is_visible <- function(height, directions) {
   for (direction in directions) { if ((length(direction) == 0) | ((sum(direction < height) == length(direction)))) { return(T) } }
@@ -52,4 +52,4 @@ find_tree_info <- function(grid_vector, n, score) {
 
 # puzzle answers
 print(paste0("puzzle 1 answer = ", find_tree_info(grid_vector, n, FALSE)))
-print(paste0("puzzle 1 answer = ", find_tree_info(grid_vector, n, TRUE)))
+print(paste0("puzzle 2 answer = ", find_tree_info(grid_vector, n, TRUE)))

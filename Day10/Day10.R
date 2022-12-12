@@ -4,7 +4,7 @@ connection <- file(description = "Day10Input.txt", open = "r")
 program <- readLines(connection)
 close(connection)
 
-get_pixel <- function(cycle, pixel_position, sprite_position) {
+get_pixel <- function(pixel_position, sprite_position) {
   if (pixel_position %in% sprite_position) { return("#") }
   else { return(".") }
 }
@@ -16,21 +16,23 @@ pixel_position <- 0
 pixels <- c()
 for (instruction in program) {
   instruction <- str_split(instruction, " ")[[1]]
-  if (instruction[1] == "noop") { 
-    pixels <- c(pixels, get_pixel(cycle, pixel_position, sprite_position))
+  if (instruction[1] == "noop") {
+    pixels <- c(pixels, get_pixel(pixel_position, sprite_position))
     cycle <- cycle + 1
     pixel_position <- pixel_position + 1
   }
   if (instruction[1] == "addx") {
-    pixels <- c(pixels, get_pixel(cycle, pixel_position, sprite_position))
+    # first addx cycle
     cycle <- cycle + 1
+    pixels <- c(pixels, get_pixel(pixel_position, sprite_position))
     pixel_position <- pixel_position + 1
     if (cycle %% 40 == 20) { signal_strengths <- c(signal_strengths, cycle * sprite_position[2]) }
     if (cycle %% 40 == 1) { pixel_position <- 0 }
-    pixels <- c(pixels, get_pixel(cycle, pixel_position, sprite_position))
-    sprite_position <- sprite_position + as.numeric(instruction[2])
+    # second addx cycle
     cycle <- cycle + 1
+    pixels <- c(pixels, get_pixel(pixel_position, sprite_position))
     pixel_position <- pixel_position + 1
+    sprite_position <- sprite_position + as.numeric(instruction[2])
   }
   if (cycle %% 40 == 20) { signal_strengths <- c(signal_strengths, cycle * sprite_position[2]) }
   if (cycle %% 40 == 1) { pixel_position <- 0 }

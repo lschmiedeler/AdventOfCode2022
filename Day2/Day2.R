@@ -1,12 +1,7 @@
 library(tidyverse)
 
-connection <- file(description = "Day2Input.txt", open = "r")
-rounds <- data.frame()
-for (line in readLines(connection)) {
-  rounds <- rbind(rounds, strsplit(line, " ")[[1]])
-}
+rounds <- read.csv("Day2Input.txt", header = F, sep = " ")
 names(rounds) <- c("opponent", "result")
-close(connection)
 
 score <- function(opponent, you) {
   sum(data.frame(opponent = opponent, you = you) %>% 

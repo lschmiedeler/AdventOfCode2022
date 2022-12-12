@@ -5,10 +5,7 @@ for (line in readLines(connection)) {
   if (line == "") {
     all_calories <- append(all_calories, calories)
     calories <- 0
-  }
-  else {
-    calories <- calories + as.integer(line)
-  }
+  } else { calories <- calories + as.integer(line) }
 }
 close(connection)
 

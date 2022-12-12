@@ -1,3 +1,5 @@
+library(hash)
+
 connection <- file(description = "Day7Input.txt", open = "r")
 directories <- hash()
 path <- ""
