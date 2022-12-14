@@ -3,9 +3,9 @@ import networkx as nx # graph library
 
 file = open("Day12Input.txt")
 lines = file.read()
+lines_list = [line for line in re.split("\n", lines) if line != ""]
 file.close()
 
-lines_list = [line for line in re.split("\n", lines) if line != ""]
 ncol, nrow = len(lines_list[0]), len(lines_list)
 heights = re.sub("\s*", "", lines)
 start, end = re.search("S", heights).start(), re.search("E", heights).start()
@@ -34,8 +34,9 @@ shortest_path = nx.shortest_path_length(G, start, end)
 min_shortest_path = nx.shortest_path_length(G, start, end)
 for start in other_starts:
     if nx.has_path(G, start, end) == True:
-        if nx.shortest_path_length(G, start, end) < min_shortest_path:
-            min_shortest_path = nx.shortest_path_length(G, start, end)
+        next_shortest_path = nx.shortest_path_length(G, start, end)
+        if next_shortest_path < min_shortest_path:
+            min_shortest_path = next_shortest_path
 
 # puzzle answers
 print("puzzle 1 answer =", shortest_path)
