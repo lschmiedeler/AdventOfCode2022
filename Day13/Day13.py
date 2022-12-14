@@ -5,8 +5,7 @@ file = open("Day13Input.txt")
 lines = file.read()
 file.close()
 
-packets_pairs = []
-for packet_pair in re.findall("(\[.*\])\n(\[.*\])\n", lines): packets_pairs.append([ast.literal_eval(packet_pair[0]), ast.literal_eval(packet_pair[1])])
+packets = [ast.literal_eval(packet) for packet in re.split("\n|\n\n", lines) if packet != ""]
 
 def check_packets(p):
     if type(p[0]) == int and type(p[1]) == int: # both integers
@@ -45,13 +44,9 @@ def merge_sort(p):
         return merge(merge_sort(p[:middle]), merge_sort(p[middle:]))
 
 right_order = []
-for i in range(len(packets_pairs)):
-    if check_packets(packets_pairs[i]) == 1: right_order.append(i + 1)
+for i in [2*i for i in range(int(len(packets) / 2))]:
+    if check_packets([packets[i], packets[i+1]]): right_order.append(int(i / 2) + 1)
 
-packets = []
-for packet_pair in packets_pairs:
-    packets.append(packet_pair[0])
-    packets.append(packet_pair[1])
 packets.append([[2]])
 packets.append([[6]])
 ordered_packets = merge_sort(packets)

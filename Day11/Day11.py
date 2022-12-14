@@ -29,6 +29,7 @@ class Monkey:
 class KeepAway:
     def __init__(self, all_monkey_info):
         self.monkeys = []
+        all_monkey_info = [monkey_info for monkey_info in re.split("\n\n", all_monkey_info) if monkey_info != ""]
         for monkey_info in all_monkey_info: self.monkeys.append(Monkey([list(t) for t in re.findall("\s*Starting items: (.*)\s*Operation: new = (.*)\s*Test: divisible by (.*)\s*If true: throw to monkey (.*)\s*If false: throw to monkey (.*)\s*", monkey_info)][0]))
         self.inspections = [0] * len(self.monkeys)
         self.modulo = 1
@@ -52,7 +53,7 @@ class KeepAway:
         return sorted(self.inspections)[-2] * sorted(self.inspections)[-1]
                         
 file = open("Day11Input.txt")
-lines = [line for line in re.split("\n\n", file.read()) if line != ""]
+lines = file.read()
 file.close()
 
 KeepAway1 = KeepAway(lines)

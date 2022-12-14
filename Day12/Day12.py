@@ -3,10 +3,11 @@ import networkx as nx # graph library
 
 file = open("Day12Input.txt")
 lines = file.read()
-lines_list = [line for line in re.split("\n", lines) if line != ""]
 file.close()
 
+lines_list = [line for line in re.split("\n", lines) if line != ""]
 ncol, nrow = len(lines_list[0]), len(lines_list)
+
 heights = re.sub("\s*", "", lines)
 start, end = re.search("S", heights).start(), re.search("E", heights).start()
 other_starts = []
@@ -14,8 +15,8 @@ for i in range(len(heights)):
     if heights[i] == "a": other_starts.append(i)
 heights = re.sub("E", "z", re.sub("S", "a", heights))
 
-nodes = list(range(len(heights)))
-edges = []
+nodes = list(range(len(heights))) # create a list of nodes
+edges = [] # create a list of edges
 for i in range(len(heights)):
     if (i % ncol != ncol - 1): # left
         if (ord(heights[i+1]) <= ord(heights[i]) + 1): edges.append((i, i+1))
