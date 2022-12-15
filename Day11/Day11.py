@@ -12,6 +12,10 @@ class Monkey:
         old = self.items[0]
         self.items[0] = int(eval(self.operation) % modulo)
         if divide_by_3: self.items[0] = int(self.items[0] / 3)
+    
+    def test_item(self, item):
+        if item % self.test ==  0: return True
+        else: return False
         
     def throw_item(self, modulo, divide_by_3):
         self.__inspect_item(modulo, divide_by_3)
@@ -21,15 +25,15 @@ class Monkey:
     
     def catch_item(self, item):
         self.items.append(item)
-    
-    def test_item(self, item):
-        if item % self.test ==  0: return True
-        else: return False
         
 class KeepAway:
-    def __init__(self, all_monkey_info):
+    def __init__(self, file_path):
+        file = open(file_path)
+        lines = file.read()
+        file.close()
+        
         self.monkeys = []
-        all_monkey_info = [monkey_info for monkey_info in re.split("\n\n", all_monkey_info) if monkey_info != ""]
+        all_monkey_info = [monkey_info for monkey_info in re.split("\n\n", lines) if monkey_info != ""]
         for monkey_info in all_monkey_info: self.monkeys.append(Monkey([list(t) for t in re.findall("\s*Starting items: (.*)\s*Operation: new = (.*)\s*Test: divisible by (.*)\s*If true: throw to monkey (.*)\s*If false: throw to monkey (.*)\s*", monkey_info)][0]))
         self.inspections = [0] * len(self.monkeys)
         self.modulo = 1
@@ -52,16 +56,12 @@ class KeepAway:
     def calculate_monkey_business(self):
         return sorted(self.inspections)[-2] * sorted(self.inspections)[-1]
                         
-file = open("Day11Input.txt")
-lines = file.read()
-file.close()
-
-KeepAway1 = KeepAway(lines)
+file_path = "Day11Input.txt"
+KeepAway1 = KeepAway(file_path)
 KeepAway1.play_rounds(20, True)
-
-KeepAway2 = KeepAway(lines)
+KeepAway2 = KeepAway(file_path)
 KeepAway2.play_rounds(10000, False)
-
+        
 # puzzle answers
 print("puzzle 1 answer =", KeepAway1.calculate_monkey_business())
 print("puzzle 2 answer =", KeepAway2.calculate_monkey_business())
