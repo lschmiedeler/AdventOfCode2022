@@ -27,13 +27,11 @@ def find_tuning_freq(distress_beacon):
 def find_distress_beacon_tuning_freq(union_no_beacon_polys, min_bound, max_bound):
     boundary = Polygon([(min_bound, min_bound), (min_bound, max_bound), (max_bound, max_bound), (max_bound, min_bound)])
     distress_beacon = boundary.difference(union_no_beacon_polys)
-    if type(distress_beacon) == Polygon:
-        return find_tuning_freq(distress_beacon)
+    if type(distress_beacon) == Polygon: return find_tuning_freq(distress_beacon)
     else:
         possible_beacon = list(distress_beacon.geoms)
         for p in possible_beacon:
-            if p.area == 2:
-                return find_tuning_freq(p)
+            if p.area == 2: return find_tuning_freq(p)
 
 # puzzle answers
 print("puzzle 1 answer =", find_n_no_beacon(union_no_beacon_polys, beacons, 2000000))
